@@ -35,4 +35,9 @@ public class PokemonServiceImpl implements PokemonService {
 
         return parseService.returnParsedPokemon(response.getBody());
     }
+
+    @Override
+    public void addToPokemonTable(PokemonDto pokemonDto) {
+
+    }
 }

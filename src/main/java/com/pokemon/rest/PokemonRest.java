@@ -1,8 +1,8 @@
 package com.pokemon.rest;
 
 
-import com.pokemon.cache.PokemonCache;
 import com.pokemon.dto.PokemonDto;
+import com.pokemon.service.PokemonJdbcService;
 import com.pokemon.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PokemonRest {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    @Autowired
-    PokemonCache pokemonCache;
+
     private PokemonService pokemonService;
+
+    @Autowired
+    private PokemonJdbcService pokemonJdbcService;
 
 
     @Autowired
@@ -34,20 +37,25 @@ public class PokemonRest {
         return new PokemonDto();
     }
 
+    @RequestMapping("/getpokemons")
+    public List<Map<String, Object>> getPokemons() {
+        List<Map<String, Object>> pokemonsFromDatabase = this.pokemonJdbcService.getPokemonsFromDatabase();
+        return pokemonsFromDatabase;
+    }
+
 
     @PostMapping("/addPokemon")
     public ResponseEntity<String> addPokemon(@RequestBody PokemonDto pokemonDto) {
-        pokemonCache.pokemonDtosList.add(pokemonDto);
-
+        this.pokemonJdbcService.addToPokemonTable(pokemonDto);
         return ResponseEntity.ok("ok");
     }
 
 
-    @RequestMapping("/showAll")
-    public List<PokemonDto> showPokemon() {
-        List<PokemonDto> pokemonDtosList = pokemonCache.pokemonDtosList;
-        return pokemonDtosList;
-    }
+//
+//    @RequestMapping("/showAll")
+//    public List<PokemonDto> showPokemon() {
+//        return pokemonDtosList;
+//    }
 
 
 }

@@ -26,7 +26,21 @@ public class PokemonDto {
     public PokemonDto() {
     }
 
+    public void setAbilities(AbilitiesDto[] abilities) {
+        this.abilities = abilities;
+    }
 
+    public void setStatsDto(StatsDto[] statsDto) {
+        this.statsDto = statsDto;
+    }
+
+    public AbilitiesDto[] getAbilities() {
+        return abilities;
+    }
+
+    public StatsDto[] getStatsDto() {
+        return statsDto;
+    }
 
     public String getName() {
         return name;

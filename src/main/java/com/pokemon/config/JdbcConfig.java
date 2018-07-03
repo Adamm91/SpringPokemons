@@ -22,6 +22,7 @@ public class JdbcConfig {
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("db/create-db.sql")
                 .addScript("db/insert-data.sql")
+                .addScript("db/create-poke-api.sql")
                 .build();
     }
 
